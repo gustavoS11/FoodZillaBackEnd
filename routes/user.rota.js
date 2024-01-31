@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {getUsuario} from '../controllers/user.controller.js'
-export const rotaUser = Router()
+import {getUsuarios} from '../controllers/user.controller.js'
+export const rotaUsers = Router()
 
-rotaUser.get('/rota',getUsuario)
+rotaUsers.get('',getUsuarios)

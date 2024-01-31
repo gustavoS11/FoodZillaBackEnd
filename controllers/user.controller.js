@@ -1,6 +1,6 @@
-import { getUsuariosModel } from "../models/user.models.js"
+import { getUsuariosModel } from "../models/user.model.js"
 
-export async function getUsuario(req, res) {
-    const user = await getUsuariosModel()
-    return res.json(user)
+export async function getUsuarios(req, res) {
+    const users = await getUsuariosModel()
+    return res.status(200).json(users)
 }

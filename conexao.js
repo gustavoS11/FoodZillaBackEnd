@@ -1,5 +1,5 @@
-import mysql from 'mysql'
-export const conexao  = mysql.createConnection({
+import mysql from 'mysql2/promise'
+export const conexao  = await mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
