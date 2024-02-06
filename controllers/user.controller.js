@@ -14,3 +14,8 @@ export async function login(req, res) {
     const user = await getUsuarioByEmailModel(dados)
     return res.status(200).json(user)
 }
+export async function loginAdmin(req, res) {
+    const dados = req.body
+    const user = await getUsuarioByEmailAdminModel(dados)
+    return res.status(200).json(user)
+}
