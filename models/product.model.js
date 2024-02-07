@@ -7,3 +7,10 @@ export async function getProdutosModel() {
         console.log(err);
     }
 }
+export async function getProdutosCartModel(dados) {
+    try {
+        const [results, fields] = await conexao.query(`select * from pedido where `)
+    } catch (err) {
+        console.log(err);
+    }
+}
