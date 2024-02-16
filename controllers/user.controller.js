@@ -1,4 +1,4 @@
-import { getUsuarioByIdModel, registerUserModel, getUsuarioByEmailModel, getEnderecoByIdModel} from "../models/user.model.js"
+import { getUsuarioByIdModel, registerUserModel, getUsuarioByEmailModel, getEnderecoByIdModel, updateEnderecoById} from "../models/user.model.js"
 
 export async function cadastro(req, res) {
     const dados = req.body
@@ -36,4 +36,13 @@ export async function endereco(req, res) {
     else {
         return res.status(200).json(user)
     }
+}
+export async function atualizarEndereco(req, res) {
+    const dados = req.body
+    const endereco = dados.endereco
+    console.log(endereco)
+    const id = dados.id
+    console.log(id)
+    const update = await updateEnderecoById(endereco, id)
+    return res.status(200).json(update)
 }

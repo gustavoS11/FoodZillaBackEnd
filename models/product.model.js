@@ -7,7 +7,7 @@ export async function getProdutosModel() {
         console.log(err);
     }
 }
-export async function getAddressModel() {
+export async function getNeighborhoodsModel() {
     try {
         const [results, fields] = await conexao.query(`select * from bairro`);
         return results;

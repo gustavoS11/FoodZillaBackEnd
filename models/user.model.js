@@ -42,3 +42,11 @@ export async function registerUserModel(dados) {
         console.log(err)
     }
 }
+export async function updateEnderecoById(endereco, id) {
+    try {
+        const [results, fields] = await conexao.query(`update usuario set endereco = '${endereco}' where id = ${id}`)
+        return results
+    } catch (err) {
+        console.log(err)
+    }
+}
