@@ -18,7 +18,14 @@ export async function getUsuarioByEmailAdminModel(dados) {
         console.log(err)
     }
 }
-export async function getUsuarioByIdModel(id) {
+export async function getUsuarioByEmail() {
+    try {
+        const [result, fields] = await conexao.query(`select * from usuario where email = ${dados.email}`)
+    } catch (err) {
+        console.log(err);
+    }
+}
+export async function getUsuarioByIdModel() {
     try {
         const [results, fields] = await conexao.query(`select * from usuario where id = ${id}`)
         return results
