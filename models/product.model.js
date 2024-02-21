@@ -30,9 +30,9 @@ export async function insertOrderModel(id, cart) {
         console.log(err)
     }
 }
-export async function selectOrderByIdModel(id) {
+export async function getOrders() {
     try {
-        const [results, fields] = await conexao.query(`select * from pedido where id = ${id} and id_status = 1`)
+        const [results, fields] = await conexao.query(`select * from pedido`)
     } catch (err) {
         console.log(err)
     }

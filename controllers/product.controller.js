@@ -1,4 +1,4 @@
-import { getProdutosModel, getNeighborhoodsModel, insertOrderModel, selectOrderByIdModel} from "../models/product.model.js"
+import { getProdutosModel, getNeighborhoodsModel, insertOrderModel, getOrders} from "../models/product.model.js"
 
 export async function getProdutos(req, res) {
     const products = await getProdutosModel()
@@ -17,10 +17,10 @@ export async function insertOrder(req, res) {
         return res.status(200).json(insertOrder)
     }
 }
-export async function selectOrderById(req, res) {
+export async function getOrders(req, res) {
     const dados = req.body
     console.log(dados)
-    const selectOrder = await selectOrderByIdModel(id)
+    const selectOrder = await getOrders()
     if (selectOrder) {
         return res.status(200).json(selectOrder)
     }
