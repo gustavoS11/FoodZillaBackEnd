@@ -1,4 +1,4 @@
-import { getUsuarioByIdModel, registerUserModel, getUsuarioByEmailModel, getEnderecoByIdModel, updateEnderecoById} from "../models/user.model.js"
+import { getUsuarioByIdModel, registerUserModel, getUsuarioModel, getUsuarioAdminModel, getEnderecoByIdModel, updateEnderecoById} from "../models/user.model.js"
 
 export async function cadastro(req, res) {
     const dados = req.body
@@ -17,9 +17,17 @@ export async function usuario(req, res) {
 }
 export async function login(req, res) {
     const dados = req.body
-    const user = await getUsuarioByEmailModel(dados)
-    if (!user) {
+    const user = await getUsuarioModel(dados)
+    if (user.length == 0) {
         return res.status(404).json({ erro: 'email ou senha inválida' })
+    }
+    return res.status(200).json(user[0])
+}
+export async function loginAdmin(req, res) {
+    const dados = req.body
+    const user = await getUsuarioAdminModel(dados)
+    if (user.length == 0) {
+        return res.status(404).json({ erro: 'email ou senha inválida ou permissão negada' })
     }
     return res.status(200).json(user[0])
 }
