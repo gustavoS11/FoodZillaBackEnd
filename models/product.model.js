@@ -32,30 +32,42 @@ export async function insertOrderModel(dados) {
 }
 export async function getOrdersModel() {
     try {
-        const [results, fields] = await conexao.query(`SELECT * FROM pedido where id_status = 1`)
-        const pedidos = []
-        const produto = []
-        const allPedidos = []
+        const [results, fields] = await conexao.query(`SELECT * FROM pedido where id_status = 1`);
+        const pedidos = [];
+        const produto = [];
+        const allPedidos = [];
+
         for (let i of results) {
             const [produto_pedido, campos] = await conexao.query(`select * from produto_pedido where id_pedido = ${i.id}`);
-            for (let item of produto_pedido) {
-                const [produtoQuery, fiels] = await conexao.query(`select * from produto where id = ${item.id_produto}`)
-                produto.push(produtoQuery[0])
-                const findPed = pedidos.find((ped) => ped.pedido == item.id_pedido)
+            const userPromises = produto_pedido.map(async (item) => {
+                const [user, fields] = await conexao.query(`select * from usuario where id = ${i.id_usuario}`);
+                return user[0].nome;
+            });
+            const usuarios = await Promise.all(userPromises);
+
+            for (let j = 0; j < produto_pedido.length; j++) {
+                const item = produto_pedido[j];
+                const userNome = usuarios[j];
+                const [produtoQuery, fiels] = await conexao.query(`select * from produto where id = ${item.id_produto}`);
+                produto.push(produtoQuery[0]);
+
+                const findPed = pedidos.find((ped) => ped.pedido == item.id_pedido);
+
                 if (!findPed) {
-                    pedidos.push({ pedido: item.id_pedido, total : i.total, endereco : i.endereco})
+                    pedidos.push({ pedido: item.id_pedido, total: i.total, endereco: i.endereco, usuario: userNome });
                 }
             }
 
             produto_pedido.forEach((item) => {
-                const ped = pedidos.find((ped) => ped.pedido == item.id_pedido)
-                const prods = produto.find((prod) => prod.id == item.id_produto)
-                allPedidos.push({ pedido: ped, produtos: prods })
-            })
+                const ped = pedidos.find((ped) => ped.pedido == item.id_pedido);
+                const prods = produto.find((prod) => prod.id == item.id_produto);
+                allPedidos.push({ pedido: ped, produtos: prods });
+            });
         }
-        return allPedidos
+        console.log(allPedidos);
+        return allPedidos;
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }
 export async function updateStatusModel(id) {
