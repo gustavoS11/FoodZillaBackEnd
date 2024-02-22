@@ -1,4 +1,4 @@
-import { getUsuarioByIdModel, registerUserModel, getUsuarioModel, getUsuarioAdminModel, getEnderecoByIdModel, updateEnderecoById} from "../models/user.model.js"
+import { getUsuarioByIdModel, registerUserModel, getUsuarioModel, getUsuarioAdminModel, getEnderecoByIdModel, updateEnderecoById, getUsuarioByEmailModel} from "../models/user.model.js"
 
 export async function cadastro(req, res) {
     const dados = req.body

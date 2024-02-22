@@ -17,8 +17,7 @@ export async function getNeighborhoodsModel() {
 }
 export async function insertOrderModel(dados) {
     try {
-        console.log(dados)
-        const [results, fields] = await conexao.query(`INSERT INTO pedido (id, id_usuario, id_status, data, total) VALUES (NULL, '${dados.id_usuario}', '1', NULL, '${dados.total}')`)
+        const [results, fields] = await conexao.query(`INSERT INTO pedido (id, id_usuario, id_status, data, total, endereco) VALUES (NULL, '${dados.id_usuario}', '1', NULL, '${dados.total}', '${dados.endereco}')`)
         const insertId = results.insertId
         for (let i in dados.cart) {
             const productId = dados.cart[i].id
@@ -33,7 +32,7 @@ export async function insertOrderModel(dados) {
 }
 export async function getOrdersModel() {
     try {
-        const [results, fields] = await conexao.query(`SELECT * FROM pedido`)
+        const [results, fields] = await conexao.query(`SELECT * FROM pedido where id_status = 1`)
         const pedidos = []
         const produto = []
         const allPedidos = []
@@ -44,7 +43,7 @@ export async function getOrdersModel() {
                 produto.push(produtoQuery[0])
                 const findPed = pedidos.find((ped) => ped.pedido == item.id_pedido)
                 if (!findPed) {
-                    pedidos.push({ pedido: item.id_pedido, total : i.total})
+                    pedidos.push({ pedido: item.id_pedido, total : i.total, endereco : i.endereco})
                 }
             }
 
@@ -55,6 +54,14 @@ export async function getOrdersModel() {
             })
         }
         return allPedidos
+    } catch (err) {
+        console.log(err)
+    }
+}
+export async function updateStatusModel(id) {
+    try {
+        const [results, fields] = await conexao.query(`update pedido set id_status = '2' where id = '${id}'`)
+        return results
     } catch (err) {
         console.log(err)
     }
